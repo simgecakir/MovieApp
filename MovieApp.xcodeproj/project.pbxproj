@@ -19,6 +19,7 @@
 		526B515E26B7103F00A4A9A2 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526B515D26B7103F00A4A9A2 /* MovieDetailViewController.swift */; };
 		526B516026B71A3B00A4A9A2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 526B515F26B71A3B00A4A9A2 /* GoogleService-Info.plist */; };
 		526B516226B71C4B00A4A9A2 /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 526B516126B71C4B00A4A9A2 /* MovieCell.swift */; };
+		529D323626B7D0C200660F3B /* SplashService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529D323526B7D0C200660F3B /* SplashService.swift */; };
 		B65C1953533802D6D5EC38AD /* Pods_MovieApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 89135CDD5B5DC3448BE2C438 /* Pods_MovieApp.framework */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +39,7 @@
 		526B515D26B7103F00A4A9A2 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
 		526B515F26B71A3B00A4A9A2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		526B516126B71C4B00A4A9A2 /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
+		529D323526B7D0C200660F3B /* SplashService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashService.swift; sourceTree = "<group>"; };
 		89135CDD5B5DC3448BE2C438 /* Pods_MovieApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MovieApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB7FDFC53A5044049EF22FA5 /* Pods-MovieApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MovieApp.debug.xcconfig"; path = "Target Support Files/Pods-MovieApp/Pods-MovieApp.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -110,6 +112,7 @@
 			isa = PBXGroup;
 			children = (
 				526B515726B70DE300A4A9A2 /* APIService.swift */,
+				529D323526B7D0C200660F3B /* SplashService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -271,6 +274,7 @@
 				526B515C26B7101800A4A9A2 /* SplashViewController.swift in Sources */,
 				526B515E26B7103F00A4A9A2 /* MovieDetailViewController.swift in Sources */,
 				526B515626B70D7A00A4A9A2 /* Movie.swift in Sources */,
+				529D323626B7D0C200660F3B /* SplashService.swift in Sources */,
 				526B514026B70B7200A4A9A2 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -421,6 +425,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = MovieApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -440,6 +445,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = MovieApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

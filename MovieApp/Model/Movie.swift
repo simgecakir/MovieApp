@@ -30,10 +30,6 @@ struct Movie: Mappable {
         year        <- map["Year"]
         runtime     <- map["Runtime"]
         genre       <- map["Genre"]
-        director    <- map["Director"]
-        actors      <- map["Actors"]
         plot        <- map["Plot"]
-        language    <- map["Language"]
-        country     <- map["Country"]
     }
 }

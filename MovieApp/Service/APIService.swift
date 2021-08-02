@@ -7,6 +7,7 @@
 
 import Foundation
 import Alamofire
+import SwiftyJSON
 
 class APIService {
     
@@ -36,5 +37,6 @@ class APIService {
                 }
             }
     }
+    
 
 }
