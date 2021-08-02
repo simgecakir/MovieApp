@@ -21,6 +21,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        getAllMovies()
         print(movies.count)
         configureView()
         
@@ -104,10 +105,10 @@ extension HomeViewController: UICollectionViewDelegate, UICollectionViewDataSour
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "MovieCell", for: indexPath) as! MovieCell
         
         cell.contentImageView.image = UIImage(named: "test")
-        cell.titleLabel.text = "Joker"
-        cell.yearLabel.text = "2019"
-//        cell.titleLabel.text = movies[indexPath.row].title
-//        cell.yearLabel.text = movies[indexPath.row].year
+//        cell.titleLabel.text = "Joker"
+//        cell.yearLabel.text = "2019"
+        cell.titleLabel.text = movies[indexPath.row].title
+        cell.yearLabel.text = movies[indexPath.row].year
 
         return cell
     }
