@@ -15,28 +15,37 @@ class APIService {
 
     let baseURL = "http://www.omdbapi.com/"
     let apiKey = "264e2e6c"
-
     
-    func getAllMovies(callback: @escaping([[String:Any]]?, Bool) -> ()) {
+    func getAllMovies(callback: @escaping([Movie]?, Bool) -> ()){
 
         let url = "\(baseURL)?s=\("bat")&r=json&apikey=\(apiKey)"
         
-        AF.request(url).responseJSON(){ response in
-                switch response.result{
-                case .success(let jsonData):
-                    if let response = jsonData as? Dictionary<String,Any> {
-                        let movieList = response["Search"] as? [[String : Any]]
-                        callback(movieList, true)
-                    } else {
-                        print("JSON parse error")
-                        callback(nil, false)
-                    }
-                case .failure(let error):
-                    print("Error: \(error.localizedDescription)")
-                    callback(nil,false)
-                }
+        Alamofire.AF.request(url).responseJSON{ response in
+            do {
+                let data = try JSONDecoder().decode(MovieContainer.self, from: response.data!)
+                callback(data.Search, true)
+                } catch {
+                    print("error while parse the data")
+                    callback(nil, false)
             }
+        }.resume()
     }
     
+    
+    func getMovie(imdbID: String, callback: @escaping(MovieDetail?, Bool) -> ()) {
+        
+        let url = "\(baseURL)?i=\(imdbID)&r=json&apikey=\(apiKey)"
+//        http://www.omdbapi.com/?i=tt0096895&r=json&apikey=264e2e6c
 
+        Alamofire.AF.request(url).responseJSON{ response in
+            do {
+                let data = try JSONDecoder().decode(MovieDetail.self, from: response.data!)
+                callback(data, true)
+                } catch {
+                    print("error while parse the data")
+                    callback(nil, false)
+                }
+        }
+    }
+    
 }

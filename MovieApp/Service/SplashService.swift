@@ -14,7 +14,7 @@ class SplashService {
     var remoteConfig = RemoteConfig.remoteConfig()
     
     func setRemoteConfigDefaults(){
-        let defaultValue = [ "company" : "default company name" as NSObject]
+        let defaultValue = [ "companyName" : "default company name" as NSObject]
         remoteConfig.setDefaults(defaultValue)
     }
     
@@ -24,11 +24,11 @@ class SplashService {
         
         let settings = RemoteConfigSettings()
         remoteConfig.configSettings = settings
-        remoteConfig.fetch(withExpirationDuration: 0){ [unowned self] (status, error) -> Void in
+        remoteConfig.fetch(){ [unowned self] (status, error) -> Void in
               if status == .success {
                 print("Config fetched!")
                 self.remoteConfig.activate { changed, error in
-                    callback(self.remoteConfig.configValue(forKey: "company").stringValue)
+                    callback(self.remoteConfig.configValue(forKey: "companyName").stringValue)
                 }
               } else {
                 print("Config not fetched")

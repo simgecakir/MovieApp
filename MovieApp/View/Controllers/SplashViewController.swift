@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class SplashViewController: UIViewController {
 
@@ -14,23 +15,15 @@ class SplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        view.backgroundColor = .black
         configureUI()
         
-        SplashService.shared.fetchRemoteConfig(){ title in
-            DispatchQueue.main.async {
-                self.titleLabel.text = title
-                }
-        }
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.navigateToHome()
-        }
-        
+        checkInternetConnection()
     }
     
     func configureUI(){
         
         navigationController?.navigationBar.isHidden = true
-        view.backgroundColor = .black
             
         titleLabel.textColor = .white
         titleLabel.font = UIFont.boldSystemFont(ofSize: 50)
@@ -43,13 +36,39 @@ class SplashViewController: UIViewController {
         }
     }
     
+    func checkInternetConnection() {
+
+        if NetworkReachabilityManager()?.isReachable == true {
+            
+            SplashService.shared.fetchRemoteConfig(){ title in
+                DispatchQueue.main.async {
+                    self.titleLabel.text = title
+                    }
+            }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                self.navigateToHome()
+            }
+        } else {
+            internetConnectionAlert()
+        }
+        
+    }
+    
+    func internetConnectionAlert(){
+        
+        let alert = UIAlertController(title: "No Internet Connection", message: "Please check if you connect to Wi-Fi", preferredStyle: .alert)
+        let tryAgain = UIAlertAction(title: "Try Again", style: .default, handler: { _ in
+            self.checkInternetConnection()
+        })
+        
+        alert.addAction(tryAgain)
+        present(alert, animated: true, completion: nil)
+    }
+        
     private func navigateToHome() {
                       
-        let nav = UINavigationController(rootViewController: HomeViewController())
-        
-        let w = UIApplication.shared.keyWindow
-        w?.rootViewController = nav
-        w?.makeKeyAndVisible()
+        navigationController!.viewControllers = [HomeViewController()]
+        navigationController?.popToRootViewController(animated: true)
     }
     
 }

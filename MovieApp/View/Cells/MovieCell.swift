@@ -10,9 +10,11 @@ import SnapKit
 
 class MovieCell: UICollectionViewCell {
     
+    static var cellName = "MovieCell"
+    
     let containerView: UIView = {
         let view = UIView()
-        view.backgroundColor = .gray
+        view.backgroundColor = .clear
         view.clipsToBounds = true
         view.layer.cornerRadius = 8
         return view
@@ -20,20 +22,26 @@ class MovieCell: UICollectionViewCell {
     
     let contentImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFit
+        imageView.contentMode = .scaleAspectFill
         return imageView
+    }()
+    
+    let blurEffectView: UIVisualEffectView = {
+        let blurEffect = UIBlurEffect(style: .light)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        return blurEffectView
     }()
     
     let titleLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .white
+        label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 20)
         return label
     }()
     
     let yearLabel: UILabel = {
        let label = UILabel()
-        label.textColor = .white
+        label.textColor = .black
         label.font = UIFont.systemFont(ofSize: 16)
         return label
     }()
@@ -45,6 +53,17 @@ class MovieCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configure(title: String?, year: String?, poster: Data?){
+        
+        if let data = poster {
+            contentImageView.image = UIImage(data: data)
+        } else {
+            contentImageView.image = UIImage(systemName: "film")
+        }
+        titleLabel.text = title ?? "Movie Title"
+        yearLabel.text = year ?? "Year"
     }
     
     private func bindViews() {
@@ -59,10 +78,16 @@ class MovieCell: UICollectionViewCell {
             make.top.bottom.trailing.leading.equalToSuperview()
         }
         
+        containerView.addSubview(blurEffectView)
+        blurEffectView.snp.makeConstraints{ (make) in
+            make.leading.trailing.bottom.equalToSuperview()
+            make.height.equalTo(60)
+        }
+        
         containerView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints{ (make) in
             make.height.equalTo(20)
-            make.bottom.equalToSuperview().offset(-5)
+            make.bottom.equalToSuperview().offset(-8)
             make.leading.equalToSuperview().offset(5)
             make.trailing.equalToSuperview()
         }

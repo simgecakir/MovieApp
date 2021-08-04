@@ -10,19 +10,26 @@ import SnapKit
 
 class MovieDetailViewController: UIViewController {
 
-//    var movie: Movie!
+    var movie: MovieDetail!
+
+    let group = DispatchGroup()
+    let serialQueue = DispatchQueue(label: "serialQueue")
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .white
-        navigationItem.title = "MovieDetail"  //movie.title
-        navigationController?.navigationBar.prefersLargeTitles = false
-        
         configureUI()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     private func configureUI(){
+        
+        view.backgroundColor = .white
+        navigationItem.title = "Movie Detail"
+        navigationController?.navigationBar.prefersLargeTitles = false
+        
         
         let scrollView: UIScrollView = {
             let scroll = UIScrollView()
@@ -31,17 +38,25 @@ class MovieDetailViewController: UIViewController {
             return scroll
         }()
         
-        let contentView = UIView()
-        
-        let poster: UIImageView = {
+        let containerView = UIView()
+
+        let posterView: UIImageView = {
             let imageView = UIImageView()
-            imageView.image = UIImage(named: "test")
+            
+            if let poster = movie!.Poster {
+                let data = convertImage(url: poster)
+                imageView.image = UIImage(data: data!)
+            } else {
+                imageView.image = UIImage(systemName: "film")
+            }
+            imageView.contentMode = .scaleToFill
             return imageView
         }()
         
         let titleLabel: UILabel = {
             let label = UILabel()
-            label.text = "Movie Name"
+            label.text = movie!.Title
+            label.numberOfLines = 0
             label.font = UIFont.boldSystemFont(ofSize: 27)
             return label
         }()
@@ -49,32 +64,28 @@ class MovieDetailViewController: UIViewController {
         let yearLabel: UILabel = {
             let label = UILabel()
             label.textColor = .gray
-            label.text = "\("Year"):  2019"
+            label.text = "\("Year"):  \(movie!.Year!)"
             return label
         }()
         
         let genreLabel: UILabel = {
             let label = UILabel()
             label.textColor = .gray
-            label.text = "\("Genre"):  Action"
+            label.text = "\("Genre"):  \(movie!.Genre)"
             return label
         }()
         
         let runtimeLabel: UILabel = {
             let label = UILabel()
             label.textColor = .gray
-            label.text = "\("Runtime"):  120 min"
+            label.text = "\("Runtime"):  \(movie!.Runtime!)"
             return label
         }()
         
         let summaryLabel: UILabel = {
             let label = UILabel()
             label.textColor = .gray
-            label.text = """
-\("Summary")
-
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
-"""
+            label.text = "Summary: \(movie!.Plot!)"
             label.numberOfLines = 0
             return label
         }()
@@ -84,52 +95,55 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
             make.top.bottom.leading.trailing.equalToSuperview()
         }
         
-        scrollView.addSubview(contentView)
-        contentView.snp.makeConstraints{ (make) in
-            make.top.leading.equalToSuperview().offset(10)
+        scrollView.addSubview(containerView)
+        containerView.snp.makeConstraints{ (make) in
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview().offset(10)
             make.trailing.equalTo(view.snp.trailing).offset(-10)
             make.bottom.equalToSuperview()
         }
         
-        contentView.addSubview(poster)
-        poster.snp.makeConstraints{ (make) in
-            make.top.equalToSuperview().offset(20)
-            make.leading.trailing.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.3)
+        containerView.addSubview(posterView)
+        posterView.snp.makeConstraints{ (make) in
+            make.top.equalToSuperview()
+            make.leading.equalTo(view.snp.leading)
+            make.trailing.equalTo(view.snp.trailing)
+            make.height.equalToSuperview().multipliedBy(0.5)
         }
         
-        contentView.addSubview(titleLabel)
+        containerView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints{ (make) in
-            make.top.equalTo(poster.snp.bottom).offset(20)
+            make.top.equalTo(posterView.snp.bottomMargin).offset(20)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(50)
         }
         
-        contentView.addSubview(yearLabel)
+        containerView.addSubview(yearLabel)
         yearLabel.snp.makeConstraints{ (make) in
             make.top.equalTo(titleLabel.snp.bottom).offset(30)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(20)
         }
         
-        contentView.addSubview(genreLabel)
+        containerView.addSubview(genreLabel)
         genreLabel.snp.makeConstraints{ (make) in
             make.top.equalTo(yearLabel.snp.bottomMargin).offset(20)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(20)
         }
         
-        contentView.addSubview(runtimeLabel)
+        containerView.addSubview(runtimeLabel)
         runtimeLabel.snp.makeConstraints{ (make) in
             make.top.equalTo(genreLabel.snp.bottomMargin).offset(20)
             make.leading.trailing.equalToSuperview()
             make.height.equalTo(20)
         }
         
-        contentView.addSubview(summaryLabel)
+        containerView.addSubview(summaryLabel)
         summaryLabel.snp.makeConstraints{ (make) in
             make.top.equalTo(runtimeLabel.snp.bottomMargin).offset(20)
             make.leading.trailing.equalToSuperview()
         }
     }
+    
 }
