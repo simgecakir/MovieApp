@@ -55,11 +55,14 @@ class MovieDetailViewController: UIViewController {
         
         let titleLabel: UILabel = {
             let label = UILabel()
-            label.text = movie!.Title
+            label.sizeToFit()
+            label.text = movie.Title
             label.numberOfLines = 0
+            label.adjustsFontSizeToFitWidth = true
             label.font = UIFont.boldSystemFont(ofSize: 27)
             return label
         }()
+        
         
         let yearLabel: UILabel = {
             let label = UILabel()

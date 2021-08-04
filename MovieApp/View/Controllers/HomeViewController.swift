@@ -77,7 +77,7 @@ class HomeViewController: UIViewController {
         
         spinner.center = self.view.center
         spinner.hidesWhenStopped = true
-        spinner.style = .medium
+        spinner.style = .large
         view.addSubview(spinner)
     }
     
